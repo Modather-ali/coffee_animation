@@ -1,3 +1,4 @@
+import 'package:coffee_animation/screens/auth_screen.dart';
 import 'package:coffee_animation/screens/my_canvas/rect_canvas.dart';
 import 'package:lottie/lottie.dart';
 
@@ -66,8 +67,9 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
             child: Stack(
               alignment: Alignment.center,
               children: [
-                Visibility(
-                  visible: copAnimated,
+                AnimatedOpacity(
+                  opacity: animateCafeText ? 1 : 0,
+                  duration: const Duration(seconds: 1),
                   child: CustomPaint(
                     painter: OvalCanvas(),
                   ),
@@ -149,11 +151,25 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomPaint(
-                painter: RectCanvas(const Color(0xFF9c6644), "Log In"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) =>
+                          const AuthScreen(titleText: "Log In"))));
+                },
+                child: CustomPaint(
+                  painter: RectCanvas(const Color(0xFF9c6644), "Log In"),
+                ),
               ),
-              CustomPaint(
-                painter: RectCanvas(const Color(0xFFfbf8cc), "Sing Up"),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: ((context) =>
+                          const AuthScreen(titleText: "Sing Up"))));
+                },
+                child: CustomPaint(
+                  painter: RectCanvas(const Color(0xFFfbf8cc), "Sing Up"),
+                ),
               ),
             ],
           ),
