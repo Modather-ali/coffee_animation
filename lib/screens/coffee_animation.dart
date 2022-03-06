@@ -1,8 +1,8 @@
 import 'package:coffee_animation/screens/auth_screen.dart';
 import 'package:coffee_animation/screens/my_canvas/rect_canvas.dart';
-import 'package:lottie/lottie.dart';
 
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 import 'my_canvas/oval_canvas.dart';
 
@@ -18,6 +18,7 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
   late AnimationController _coffeeController;
   bool copAnimated = false;
   bool animateCafeText = false;
+  late double screenHeight;
 
   @override
   void initState() {
@@ -44,7 +45,7 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
+    screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.greenAccent,
       body: Stack(
@@ -55,7 +56,9 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
             height: copAnimated ? screenHeight * 0.6 : screenHeight,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(copAnimated ? 40.0 : 0.0),
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(copAnimated ? 40.0 : 0.0),
+                    bottomRight: Radius.circular(copAnimated ? 40.0 : 0.0)),
                 boxShadow: const [
                   BoxShadow(
                     offset: Offset(0, -5),
@@ -120,7 +123,6 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
               ],
             ),
           ),
-
           // Text bottom part
           Visibility(visible: copAnimated, child: _bottomPart()),
         ],
@@ -147,9 +149,11 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
         const SizedBox(height: 50),
         AnimatedPadding(
           duration: const Duration(seconds: 1),
-          padding: EdgeInsets.symmetric(horizontal: animateCafeText ? 95 : 0),
+          padding: EdgeInsets.only(
+            bottom: animateCafeText ? screenHeight * 0.18 : screenHeight * 0.1,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               GestureDetector(
                 onTap: () {
@@ -174,7 +178,6 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
             ],
           ),
         ),
-        const SizedBox(height: 130),
       ],
     );
   }
