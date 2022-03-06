@@ -1,8 +1,9 @@
+import 'package:coffee_animation/screens/my_canvas/rect_canvas.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:flutter/material.dart';
 
-import 'my_canvas/my_canvas.dart';
+import 'my_canvas/oval_canvas.dart';
 
 class CoffeeAnimation extends StatefulWidget {
   const CoffeeAnimation({Key? key}) : super(key: key);
@@ -68,7 +69,7 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
                 Visibility(
                   visible: copAnimated,
                   child: CustomPaint(
-                    painter: MyCanvas(),
+                    painter: OvalCanvas(),
                   ),
                 ),
                 Column(
@@ -90,16 +91,16 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
                     Visibility(
                       visible: copAnimated,
                       child: Image.asset(
-                        'assets/coffeepic.png',
-                        height: 190.0,
-                        width: 190.0,
+                        'assets/cafe.png',
+                        height: 150.0,
+                        width: 150.0,
                       ),
                     ),
                     Center(
                       child: AnimatedPadding(
-                        duration: const Duration(seconds: 2),
-                        padding:
-                            EdgeInsets.only(bottom: animateCafeText ? 0 : 100),
+                        duration: const Duration(milliseconds: 1400),
+                        padding: EdgeInsets.only(
+                            bottom: animateCafeText ? 0 : 100, top: 10),
                         child: AnimatedOpacity(
                           opacity: animateCafeText ? 1 : 0,
                           duration: const Duration(seconds: 1),
@@ -119,28 +120,46 @@ class _CoffeeAnimationState extends State<CoffeeAnimation>
           ),
 
           // Text bottom part
-          Visibility(visible: copAnimated, child: const _BottomPart()),
+          Visibility(visible: copAnimated, child: _bottomPart()),
         ],
       ),
     );
   }
-}
 
-class _BottomPart extends StatelessWidget {
-  const _BottomPart({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Align(
-      alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 100),
-        child: Text(
-          'Find The Best Coffee for You',
-          style: TextStyle(
-              fontSize: 27.0, fontWeight: FontWeight.bold, color: Colors.white),
+  _bottomPart() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 40.0,
+          ),
+          child: Text(
+            'Find The Best Coffee for You',
+            style: TextStyle(
+                fontSize: 27.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white),
+          ),
         ),
-      ),
+        const SizedBox(height: 50),
+        AnimatedPadding(
+          duration: const Duration(seconds: 1),
+          padding: EdgeInsets.symmetric(horizontal: animateCafeText ? 95 : 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CustomPaint(
+                painter: RectCanvas(const Color(0xFF9c6644), "Log In"),
+              ),
+              CustomPaint(
+                painter: RectCanvas(const Color(0xFFfbf8cc), "Sing Up"),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 130),
+      ],
     );
   }
 }
